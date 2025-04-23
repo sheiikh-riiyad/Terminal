@@ -16,8 +16,8 @@ app.whenReady().then(() => {
 
   // Create Loading Window
   loadingWindow = new BrowserWindow({
-    width: 400,
-    height: 300,
+    width: 500,
+    height: 400,
     icon: path.join(__dirname, 'terminal.ico'),
     frame: false,
     resizable: false,
@@ -46,10 +46,10 @@ app.whenReady().then(() => {
         </style>
     </head>
     <body>
-       <container><h1>  TERMINAL</h1></container>
+       <container><h1>  TERMINAL....</h1></container>
          
        
-        <p>Please wait while the app is starting.</p>
+        <h2>BLUEHEARTDEV.COM</h2>
     </body>
     </html>
   `)}`);
@@ -59,8 +59,15 @@ app.whenReady().then(() => {
   // Create Main Window
   const createWindow = () => {
     mainWindow = new BrowserWindow({
-      width: 800,
-      height: 600,
+      width: 600,
+      height: 400,
+      frame: false,
+      resizable: false,
+    transparent: true,
+    alwaysOnTop: true,
+    webPreferences: {
+        nodeIntegration: true,
+    },
       show: false, // Initially hidden
       icon: path.join(__dirname, 'terminal.ico'),
       webPreferences: {
@@ -73,13 +80,45 @@ app.whenReady().then(() => {
       mainWindow.show();
     });
 
-    mainWindow.loadURL('http://localhost:3000'); // Load your app
+    mainWindow.loadFile(path.join(__dirname,  'index.html')); // Load your app
   };
 
   setTimeout(() => {
     createWindow();
   }, 5000); // Simulating loading delay
 
+
+
+
+
+
+  const { ipcMain } = require("electron");
+
+  ipcMain.on("login-success",  () => {
+    console.log("✅ Login successful message received from renderer");
+    
+    if (mainWindow) {
+      mainWindow.close();
+    }
+  
+    const newWindow = new BrowserWindow({
+      width: 1024,
+      height: 768,
+      icon: path.join(__dirname, 'terminal.ico'),
+      webPreferences: {
+        nodeIntegration: false
+      }
+    });
+  
+    newWindow.loadURL("http://localhost:3000/");
+  });
+
+
+
+
+
+
+  
   // Create App Menu
   const tray = [
     {

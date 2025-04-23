@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-  </body>
+<html lang="en">
+<head>
+    <link  rel="stylesheet"  href="login.css" />
+    <style>
+        body{
+            user-select: none;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL</title>
+</head>
+<body>
+   
+    <div class="container">
+        <div class="containerii">
+          <div class="details">
+            <strong>BLUEHEARTDEV.COM</strong>
+            <p>The Securitifull Software.</p>
+          </div>
+          <form  id="login-form" class="formto">
+            <input class="input" type="text" id="email" placeholder="Email" /><br />
+            <input class="input" type="password" id="password" placeholder="Password" /><br />
+            <p id="login-message" style="margin-top: 10px; "></p>
+            <button id="loginbutton" class="butt">Login</button>
+          </form>
+        </div>
+      </div>
+      
+
+
+
+    <script src="login.js"></script>
+</body>
 </html>

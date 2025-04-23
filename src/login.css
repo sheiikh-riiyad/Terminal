@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  .container {
+    width: 600px;
+    height: 300px;
+    margin: 50px auto;
+    
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,255,255,0.6);
+    background: url("appbg.png") no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .containerii {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .details {
+    width: 50%;
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .formto {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .input {
+    margin-bottom: 10px;
+    width: 80%;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.2);
+    color: black;
+    font-size: 16px;
+    outline: none;
+  }
+
+  .input::placeholder{
+    color: black;
+    font-family: bold;
+  }
+  
+  .butt {
+    color: black;
+    font-size: 18px;
+    background-color: transparent;
+    border: 1px solid black;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+  
+  .butt:hover {
+    font-size: 18px;
+    background-color: rgba(245, 201, 6, 0.219);
+  }
+  

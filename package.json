@@ -2,7 +2,7 @@
   "name": "electron",
   "productName": "Terminal",
   "version": "1.0.0",
-  "description": "Talukder auto rice mill",
+  "description": "Blueheartdev.com",
   "main": "src/index.js",
   "icon": "src/tarm.ico",
   "scripts": {
@@ -14,7 +14,8 @@
   },
   "keywords": [],
   "author": "sheiikh-riiyad <riiyad.san1819@gmail.com>",
-  "license": "MIT",
+  "license": "Proprietary",
+  "copyright": "© 2024 Blueheartdev.com",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1",
     "express": "^4.21.2"
