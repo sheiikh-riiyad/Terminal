@@ -181,7 +181,7 @@ const server = http.createServer((req, res) => {
     }
 });
 
-const port = 3001;
+const port = 8888;
 
 server.listen(port,  () => {
   console.log(`Server listening on http://:${port}`);

@@ -1,9 +1,29 @@
 const { app, BrowserWindow, Menu } = require('electron');
-const path = require('node:path');
+// const path = require('node:path');
 
-require("./frontend.js");
-require("./Backend/server.js");
-require("./Printed/server.js");
+const { autoUpdater } = require('electron-updater');
+const log = require('electron-log');
+
+// Optional: Log autoUpdater events for debugging
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+
+
+const { fork } = require("child_process");
+const path = require("path");
+
+// Run each server in its own working directory
+fork(path.join(__dirname, "Backend/server.js"), {
+  cwd: path.join(__dirname, "Backend")
+});
+
+fork(path.join(__dirname, "Printed/server.js"), {
+  cwd: path.join(__dirname, "Printed")
+});
+
+fork(path.join(__dirname, "Security/server.js"), {
+  cwd: path.join(__dirname, "Security")
+});
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -13,6 +33,8 @@ let mainWindow;
 let loadingWindow;
 
 app.whenReady().then(() => {
+
+
 
   // Create Loading Window
   loadingWindow = new BrowserWindow({
@@ -24,7 +46,7 @@ app.whenReady().then(() => {
     transparent: true,
     alwaysOnTop: true,
     webPreferences: {
-        nodeIntegration: true,
+    nodeIntegration: true,
     },
   });
 
@@ -81,6 +103,20 @@ app.whenReady().then(() => {
     });
 
     mainWindow.loadFile(path.join(__dirname,  'index.html')); // Load your app
+
+    autoUpdater.checkForUpdatesAndNotify();
+
+    autoUpdater.on('update-downloaded', () => {
+      dialog.showMessageBox({
+        type: 'info',
+        title: 'Update Ready',
+        message: 'A new version has been downloaded. Restart the app to apply the update?',
+        buttons: ['Yes', 'Later']
+      }).then(result => {
+        if (result.response === 0) autoUpdater.quitAndInstall();
+      });
+    });
+
   };
 
   setTimeout(() => {
@@ -94,10 +130,17 @@ app.whenReady().then(() => {
 
   const { ipcMain } = require("electron");
 
-  ipcMain.on("login-success",  () => {
+  ipcMain.on("login-success", (event, userData) => {
     console.log("✅ Login successful message received from renderer");
+  
+    const { username, contact, email } = userData;
+  
+    console.log(username, contact, email);
+
     
+  
     if (mainWindow) {
+      require("./frontend.js");
       mainWindow.close();
     }
   
@@ -110,8 +153,37 @@ app.whenReady().then(() => {
       }
     });
   
-    newWindow.loadURL("http://localhost:3000/");
+    if (!app.isPackaged) {
+      newWindow.webContents.openDevTools();
+    }
+
+    newWindow.loadURL("http://localhost:4000/");
+
+
+
+    newWindow.webContents.once('did-finish-load', () => {
+      // Execute JavaScript in the renderer to set sessionStorage
+      newWindow.webContents.executeJavaScript(`
+        sessionStorage.setItem('username', '${username}');
+        sessionStorage.setItem('email', '${email}');
+        sessionStorage.setItem('contact', '${contact}');
+      `);
+    });
+
+
+
+    autoUpdater.on('update-available', () => {
+      dialog.showMessageBox({
+        type: 'info',
+        title: 'Update available',
+        message: 'A new version is available. Downloading now...'
+      });
+    });
+    
+   
+
   });
+  
 
 
 

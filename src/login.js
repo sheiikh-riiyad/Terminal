@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
 
       if (response.ok && result.user) {
-        const { username, contact } = result.user;
+        const { username, contact, email } = result.user;
 
 
 
@@ -55,13 +55,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("contact", contact);
+        sessionStorage.setItem("email", email);
+
+        
+
+        console.log(username, contact, email)
 
         message.textContent = "Login successful.";
         message.style.color = "green";
 
 
        
-        window.electronAPI.loginSuccess();
+        window.electronAPI.loginSuccess({
+          username,
+          contact,
+          email
+        });
 
 
 

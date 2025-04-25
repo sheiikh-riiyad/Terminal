@@ -2,7 +2,7 @@ const http = require("http");
 const sqlite3 = require("sqlite3").verbose();
 
 // Creates a connection to the database.
-const db = new sqlite3.Database("truck_transactionsII.db", (err) => {
+const db = new sqlite3.Database("truck_transactions.db", (err) => {
     if (err) {
         console.error("Error connecting to database:", err);
     } else {
@@ -119,7 +119,7 @@ const server = http.createServer((req, res) => {
     }
 });
 
-const port = 3011;
+const port = 8887;
 server.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);
 });
